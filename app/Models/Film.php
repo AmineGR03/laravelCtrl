@@ -31,4 +31,11 @@ class Film extends Model
     {
         return $this->hasMany(Review::class);
     }
-}
+    protected static function boot()
+{
+    parent::boot();
+
+    static::deleting(function ($film) {
+        $film->reviews()->delete();
+    });
+}}
