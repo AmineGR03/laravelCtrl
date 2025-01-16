@@ -10,6 +10,7 @@ class ReviewFactory extends Factory
 
     public function definition()
     {
+        // Generer un avis 
         return [
             'film_id' => \App\Models\Film::factory(),
             'user_id' => \App\Models\User::factory(),

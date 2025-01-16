@@ -10,6 +10,7 @@ class GenreFactory extends Factory
 
     public function definition()
     {
+        // Generer un genre
         return [
             'nom' => $this->faker->word(),
         ];

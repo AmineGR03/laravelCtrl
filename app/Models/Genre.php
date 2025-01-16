@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Genre extends Model
 {
     use HasFactory;
-
+ // Attributs de la table genres
     protected $fillable = [
-        'name',
+        'nom',
     ];
 
     /**

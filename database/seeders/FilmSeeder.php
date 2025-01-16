@@ -10,6 +10,7 @@ class FilmSeeder extends Seeder
 {
     public function run()
     {
+        // Creation de 10 films avec des genres random
         $genres = Genre::factory(5)->create();
 
         Film::factory(10)->create()->each(function ($film) use ($genres) {

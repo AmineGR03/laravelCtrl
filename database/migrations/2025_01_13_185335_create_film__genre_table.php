@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    //migration pour la table film_genre
     public function up(): void
     {
         Schema::create('film_genre', function (Blueprint $table) {

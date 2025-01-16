@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Film extends Model
 {
     use HasFactory;
-
+    // Attributs de la table "films"
     protected $fillable = [
         'titre',
         'description',
@@ -31,6 +31,7 @@ class Film extends Model
     {
         return $this->hasMany(Review::class);
     }
+    // Suppression des avis lors de la suppression du film
     protected static function boot()
 {
     parent::boot();

@@ -7,6 +7,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 
+// Page d'acceuil
 Route::get('/', [FilmController::class, 'index'])->name('films.index');
 Route::get('/films/{id}', [FilmController::class, 'show'])->name('films.show');
 
@@ -40,6 +41,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser'])->name('users.destroy');
 
+    Route::get('/genres', [AdminController::class, 'genresIndex'])->name('genres.index');
+    Route::get('/genres/create', [AdminController::class, 'createGenre'])->name('genres.create');
+    Route::post('/genres', [AdminController::class, 'storeGenre'])->name('genres.store');
+    Route::get('/genres/{id}/edit', [AdminController::class, 'editGenre'])->name('genres.edit');
+    Route::put('/genres/{id}', [AdminController::class, 'updateGenre'])->name('genres.update');
+    Route::delete('/genres/{id}', [AdminController::class, 'deleteGenre'])->name('genres.destroy');
     Route::get('/reviews', [AdminController::class, 'reviewsIndex'])->name('reviews.index');
 
     Route::delete('/reviews/{id}', [AdminController::class, 'deleteReview'])->name('reviews.destroy');

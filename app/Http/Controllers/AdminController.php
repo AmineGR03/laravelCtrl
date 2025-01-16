@@ -87,6 +87,7 @@ class AdminController extends Controller
     // Mettre à jour un film
     public function updateFilm(Request $request, $id)
     {
+        // Validation des données
         $request->validate([
             'titre' => 'required|string|max:255',
             'description' => 'required|string',
@@ -96,7 +97,7 @@ class AdminController extends Controller
             'affiche' => '',
         ]);
        
-
+        // Mise à jour du film s'il existe
         $film = Film::findOrFail($id);
         $film->update($request->all());
 
@@ -126,6 +127,7 @@ class AdminController extends Controller
     // Enregistrer un utilisateur
     public function storeUser(Request $request)
     {
+        // Validation des données
         $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
@@ -133,7 +135,7 @@ class AdminController extends Controller
             'role' => 'required|string',
             'password' => 'required|string|min:8|confirmed',
         ]);
-
+        // Création de l'utilisateur
         $user = User::create([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
@@ -141,7 +143,7 @@ class AdminController extends Controller
             'role' => $request->role,
             'password' => bcrypt($request->password),
         ]);
-
+        // Redirection vers la page des utilisateurs
         return redirect()->route('users.index')->with('success', 'Utilisateur créé avec succès');
     }
 
@@ -193,4 +195,56 @@ class AdminController extends Controller
         Review::destroy($id);
         return redirect()->route('reviews.index')->with('success', 'Critique supprimée avec succès');
     }
+
+    // Afficher tous les genres
+    public function genresIndex()
+    {
+        $genres = Genre::paginate(10);
+        return view('admin.genres.index', compact('genres'));
+    }
+    // Ajouter un genre
+    public function createGenre()
+    {
+        $genres = Genre::all();
+        return view('admin.genres.create',compact('genres'));
+    }
+
+    // Enregistrer un genre
+    public function storeGenre(Request $request)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+        Genre::create([
+            'nom' => $request->nom,
+        ]);
+        return redirect()->route('genres.index')->with('success', 'Genre ajouté avec succès');
+    }
+
+    // Modifier un genre
+    public function editGenre($id)
+    {
+        $genre = Genre::findOrFail($id);
+        return view('admin.genres.edit', compact('genre'));
+    }
+    // Mettre à jour un genre
+    public function updateGenre(Request $request, $id)
+    {
+        $request->validate([
+            'nom' => 'required|string|max:255',
+        ]);
+        $genre = Genre::findOrFail($id);
+        $genre->update([
+            'nom' => $request->nom,
+        ]);
+        return redirect()->route('genres.index')->with('success', 'Genre mis à jour avec succès');
+    }
+
+    // Supprimer un genre
+    public function deleteGenre($id)
+    {
+        Genre::destroy($id);
+        return redirect()->route('genres.index')->with('success', 'Genre supprimé avec succès');
+    }
+
 }
